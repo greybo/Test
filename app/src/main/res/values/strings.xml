@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Test</string>
+
+    <string name="send_to_news">Send</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <string name="default_notification_channel_name" translatable="true">News</string>
+</resources>
