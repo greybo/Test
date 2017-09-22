@@ -14,7 +14,7 @@ public class TestApp extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().name("myrealm7.realm").build();
+        RealmConfiguration config = new RealmConfiguration.Builder().name("realmdb.realm").build();
         Realm.setDefaultConfiguration(config);
     }
 

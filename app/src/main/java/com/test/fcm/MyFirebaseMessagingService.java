@@ -16,7 +16,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.i(TestСonstants.TAG_FCM, "From: " + remoteMessage.getFrom());
-
         if (remoteMessage.getData().size() > 0) {
             Map<String, String> map = remoteMessage.getData();
             Log.i(TestСonstants.TAG_FCM, "Message data payload: " + remoteMessage.getData());

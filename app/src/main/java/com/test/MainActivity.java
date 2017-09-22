@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Manager api;
+    private Manager managerApi;
     private RecyclerView recyclerView;
     private AdapterUsers adapter;
     private EditText textUserId;
@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textUserId = (EditText) findViewById(R.id.textLogin);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        api = new Manager(handler);
-        if (api.getUsersDao().count() == 0)
-            api.getUsers();
+        managerApi = new Manager(handler);
+        if (managerApi.getUsersDao().count() == 0)
+            managerApi.getUsers();
         else
-            api.getUsersDao().readAll();
+            managerApi.getUsersDao().readAll();
         FirebaseMessaging.getInstance().subscribeToTopic("news");
         MyFirebaseMessagingService.setHandler(handler);
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                api.send(Integer.valueOf(textUserId.getText().toString()));
+                managerApi.send(Integer.valueOf(textUserId.getText().toString()));
             }
         });
     }
@@ -67,12 +67,11 @@ public class MainActivity extends AppCompatActivity {
                     createAdapter((List<Users>) msg.obj);
                     break;
                 case TestСonstants.HANDLER_USER_ID:
-                    api.getUsersDao().changesCount((int) msg.obj);
+                    managerApi.getUsersDao().changesCount((int) msg.obj);
                     adapter.notifyDataSetChanged();
                     break;
                 case TestСonstants.HANDLER_USER_LOGIN:
-                    api.getDataGit((String) msg.obj);
-
+                    managerApi.getDataGit((String) msg.obj);
                     break;
             }
         }
@@ -81,6 +80,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        api.realmClose();
+        managerApi.realmClose();
     }
 }

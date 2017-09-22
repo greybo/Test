@@ -105,7 +105,7 @@ public class Manager {
         getApi(URL_FCM).sendToTopic(apiKey, requestBody).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.i(TestСonstants.TAG_FCM, "send code: " + response.code() + " send body: " + response.body());
+                Log.i(TestСonstants.TAG_FCM, "send code: " + response.code() + " body: " + response.body());
             }
 
             @Override

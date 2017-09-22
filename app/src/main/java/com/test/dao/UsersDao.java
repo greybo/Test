@@ -18,6 +18,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
  */
 
 public class UsersDao implements Dao<Users> {
+
     private Realm realm;
     private Handler handler;
 
