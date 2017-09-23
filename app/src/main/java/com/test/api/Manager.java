@@ -14,21 +14,11 @@ import com.test.utils.TestСonstants;
 
 import java.util.List;
 
-import io.realm.Realm;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * Created by m on 20.09.2017.
@@ -95,25 +85,25 @@ public class Manager {
         });
     }
 
-    public void send(int id) {
+    public void send(final int id) {
         MyRequestBody body = new MyRequestBody();
         body.setTo("/topics/news");
         body.getData().setUserId(id);
-        body.getData().setChangesCount("23");
-        String text = gson.toJson(body);
-        RequestBody requestBody = okhttp3.RequestBody.create(MediaType.parse("text/plain"), text);
-        getApi(URL_FCM).sendToTopic(apiKey, requestBody).enqueue(new Callback<ResponseBody>() {
+
+        getApi(URL_FCM).sendToTopic(apiKey, body).enqueue(new Callback<MyRequestBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.i(TestСonstants.TAG_FCM, "send code: " + response.code() + " body: " + response.body());
+            public void onResponse(Call<MyRequestBody> call, retrofit2.Response<MyRequestBody> response) {
+                Log.i(TestСonstants.TAG_FCM, "send code: " + response.code()
+                        + " body: " + gson.toJson(response.body()));
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<MyRequestBody> call, Throwable t) {
                 Log.i(TestСonstants.TAG_FCM, "send onFailure: " + t.getMessage());
             }
         });
     }
+
 
     public GitDataDao getGitDataDao() {
         return gitDataDao;

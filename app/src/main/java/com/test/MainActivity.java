@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         textUserId = (EditText) findViewById(R.id.textLogin);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         managerApi = new Manager(handler);
+        if (getIntent().getExtras() != null) {
+            int id = getIntent().getIntExtra("id", 0);
+            managerApi.getUsersDao().changesCount(id);
+        }
         if (managerApi.getUsersDao().count() == 0)
             managerApi.getUsers();
         else
@@ -81,5 +85,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         managerApi.realmClose();
+        MyFirebaseMessagingService.setHandler(null);
     }
 }
