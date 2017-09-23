@@ -3,6 +3,7 @@ package com.test.api;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.test.dao.GitDataDao;
@@ -14,6 +15,7 @@ import com.test.utils.TestСonstants;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,15 +92,15 @@ public class Manager {
         body.setTo("/topics/news");
         body.getData().setUserId(id);
 
-        getApi(URL_FCM).sendToTopic(apiKey, body).enqueue(new Callback<MyRequestBody>() {
+        getApi(URL_FCM).sendToTopic(apiKey, body).enqueue(new Callback<RemoteMessage>() {
             @Override
-            public void onResponse(Call<MyRequestBody> call, retrofit2.Response<MyRequestBody> response) {
+            public void onResponse(Call<RemoteMessage> call, retrofit2.Response<RemoteMessage> response) {
                 Log.i(TestСonstants.TAG_FCM, "send code: " + response.code()
                         + " body: " + gson.toJson(response.body()));
             }
 
             @Override
-            public void onFailure(Call<MyRequestBody> call, Throwable t) {
+            public void onFailure(Call<RemoteMessage> call, Throwable t) {
                 Log.i(TestСonstants.TAG_FCM, "send onFailure: " + t.getMessage());
             }
         });

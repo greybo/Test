@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         else
             managerApi.getUsersDao().readAll();
         FirebaseMessaging.getInstance().subscribeToTopic("news");
-        MyFirebaseMessagingService.setHandler(handler);
 
         Button sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +84,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         managerApi.realmClose();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         MyFirebaseMessagingService.setHandler(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyFirebaseMessagingService.setHandler(handler);
     }
 }

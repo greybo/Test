@@ -1,5 +1,6 @@
 package com.test.api;
 
+import com.google.firebase.messaging.RemoteMessage;
 import com.test.entity.GitData;
 import com.test.entity.MyRequestBody;
 import com.test.entity.Users;
@@ -31,7 +32,7 @@ public interface RestApi {
             "Content-Type:application/json"
     })
     @POST("fcm/send")
-    Call<MyRequestBody> sendToTopic(
+    Call<RemoteMessage> sendToTopic(
             @Header("Authorization") String token,
             @Body MyRequestBody body);
 
